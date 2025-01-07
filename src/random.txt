@@ -1,0 +1,38 @@
+const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    const {  files } = e.target;
+    setFormData({ ...formData, image: files[0] });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (!formData.description.trim())
+      newErrors.description = 'Description is required';
+    if (!formData.price || isNaN(formData.price) || formData.price <= 0)
+      newErrors.price = 'Please enter a valid price';
+    if (!formData.location.trim()) newErrors.location = 'Location is required';
+    if (!formData.category.trim())
+      newErrors.category = 'Please select a category';
+    if (!formData.image)
+      newErrors.image = 'Please upload an image';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    const payload = {
+      ...formData,
+      imageUrl: URL.createObjectURL(formData.image), // Placeholder for image upload
+    };
