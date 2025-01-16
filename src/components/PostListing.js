@@ -10,7 +10,7 @@ const PostListing = () => {
     price: '',
     location: '',
     category: '',
-    image: null,
+    image: [],
   });
 
   const [errors, setErrors] = useState({});
